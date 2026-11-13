@@ -26,7 +26,7 @@ jobs:
           "--add", "Microsoft.VisualStudio.Component.Windows10SDK", `
           "--add", "Microsoft.Component.VC.Runtime.UCRTSDK", `
           "--add", "Microsoft.VisualStudio.Component.VC.ATL", `
-          "--add", "Microsoft.VisualStudio.Component.VC.ATLMFC", `
+          "--add", "Microsoft.VisualStudio.Component.VC.ATLMFC"
       - name: 设置 msbuild
         uses: microsoft/setup-msbuild@v2
         with:
@@ -70,7 +70,7 @@ jobs:
           "--add", "Microsoft.VisualStudio.Component.Windows10SDK", `
           "--add", "Microsoft.Component.VC.Runtime.UCRTSDK", `
           "--add", "Microsoft.VisualStudio.Component.VC.ATL", `
-          "--add", "Microsoft.VisualStudio.Component.VC.ATLMFC", `
+          "--add", "Microsoft.VisualStudio.Component.VC.ATLMFC"
       - name: 设置 msbuild
         uses: microsoft/setup-msbuild@v2
         with:
