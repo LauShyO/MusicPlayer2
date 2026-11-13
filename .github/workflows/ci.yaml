@@ -26,12 +26,16 @@ jobs:
           "--add", "Microsoft.VisualStudio.Component.Windows10SDK", `
           "--add", "Microsoft.Component.VC.Runtime.UCRTSDK", `
           "--add", "Microsoft.VisualStudio.Component.VC.ATL", `
+          "--add", "Microsoft.Component.MSBuild", `
+          "--add", "Microsoft.VisualStudio.Component.VC.Tools.x86.x64", `
           "--add", "Microsoft.VisualStudio.Component.VC.ATLMFC"
       - name: 诊断 VS 安装状态
         run: |
           C:\ProgramData\Chocolatey\bin\vswhere.exe -all -products *
           Get-ChildItem 'C:\Program Files\Microsoft Visual Studio\' | Select-Object Name
           Get-ChildItem $env:TEMP\dd_setup_*.log -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1 | ForEach-Object { Get-Content $_.FullName -Tail 20 }
+          Test-Path 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe'
+          Get-ChildItem 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC' -ErrorAction SilentlyContinue | Select-Object Name
       - name: 设置 msbuild
         uses: microsoft/setup-msbuild@v2
         with:
@@ -75,12 +79,16 @@ jobs:
           "--add", "Microsoft.VisualStudio.Component.Windows10SDK", `
           "--add", "Microsoft.Component.VC.Runtime.UCRTSDK", `
           "--add", "Microsoft.VisualStudio.Component.VC.ATL", `
+          "--add", "Microsoft.Component.MSBuild", `
+          "--add", "Microsoft.VisualStudio.Component.VC.Tools.x86.x64", `
           "--add", "Microsoft.VisualStudio.Component.VC.ATLMFC"
       - name: 诊断 VS 安装状态
         run: |
           C:\ProgramData\Chocolatey\bin\vswhere.exe -all -products *
           Get-ChildItem 'C:\Program Files\Microsoft Visual Studio\' | Select-Object Name
           Get-ChildItem $env:TEMP\dd_setup_*.log -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1 | ForEach-Object { Get-Content $_.FullName -Tail 20 }
+          Test-Path 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe'
+          Get-ChildItem 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC' -ErrorAction SilentlyContinue | Select-Object Name
       - name: 设置 msbuild
         uses: microsoft/setup-msbuild@v2
         with:
