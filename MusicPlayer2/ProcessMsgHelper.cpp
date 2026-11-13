@@ -96,6 +96,24 @@ void CProcessMsgHelper::SendCurrentLyricPosition()
     last_lyric_position = progress;
 }
 
+void CProcessMsgHelper::SendNextLyric()
+{
+    if (m_hwnd == nullptr)
+        return;
+    auto& now_lyrics{ CPlayer::GetInstance().m_Lyrics };
+    CPlayTime time{ CPlayer::GetInstance().GetCurrentPosition() };
+    int count = now_lyrics.GetLyricCount();
+    int index = now_lyrics.GetLyricIndex(time) + 1;
+    while (index >= 0 && index < count && now_lyrics.GetLyric(index).text.empty())
+        ++index;
+    std::wstring next_lyric;
+    if (index >= 0 && index < count)
+                next_lyric = now_lyrics.GetLyric(index).text;
+    if (last_next_lyric != next_lyric)
+                SendStringMessage(m_hwnd, MusicPlayer2SentMsg::NextLyric, next_lyric);
+     last_next_lyric = next_lyric;
+}
+
 void CProcessMsgHelper::SendCurrentPosition()
 {
     if (m_hwnd == nullptr)
@@ -148,6 +166,7 @@ void CProcessMsgHelper::PositionChanged()
     if (m_hwnd == nullptr)
         return;
     SendCurrentLyric();
+        SendNextLyric();
     SendCurrentLyricPosition();
     SendCurrentPosition();
     SendPlayingStatus();
