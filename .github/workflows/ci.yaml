@@ -20,13 +20,18 @@ jobs:
       # 命令行选项：https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio?view=vs-2022
       - name: 安装需要的组件
         run: |
-          Start-Process -Wait vs_enterprise.exe -ArgumentList "--quiet", "--force", "--norestart", `
+          Start-Process -Wait vs_enterprise.exe -ArgumentList "--quiet", "--force", "--norestart", "--wait", `
           "--add", "Microsoft.VisualStudio.Component.VC.CoreIde", `
           "--add", "Microsoft.VisualStudio.Component.IntelliCode", `
           "--add", "Microsoft.VisualStudio.Component.Windows10SDK", `
           "--add", "Microsoft.Component.VC.Runtime.UCRTSDK", `
           "--add", "Microsoft.VisualStudio.Component.VC.ATL", `
           "--add", "Microsoft.VisualStudio.Component.VC.ATLMFC"
+      - name: 诊断 VS 安装状态
+        run: |
+          C:\ProgramData\Chocolatey\bin\vswhere.exe -all -products *
+          Get-ChildItem 'C:\Program Files\Microsoft Visual Studio\' | Select-Object Name
+          Get-ChildItem $env:TEMP\dd_setup_*.log -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1 | ForEach-Object { Get-Content $_.FullName -Tail 20 }
       - name: 设置 msbuild
         uses: microsoft/setup-msbuild@v2
         with:
@@ -64,13 +69,18 @@ jobs:
       # 命令行选项：https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio?view=vs-2022
       - name: 安装需要的组件
         run: |
-          Start-Process -Wait vs_enterprise.exe -ArgumentList "--quiet", "--force", "--norestart", `
+          Start-Process -Wait vs_enterprise.exe -ArgumentList "--quiet", "--force", "--norestart", "--wait", `
           "--add", "Microsoft.VisualStudio.Component.VC.CoreIde", `
           "--add", "Microsoft.VisualStudio.Component.IntelliCode", `
           "--add", "Microsoft.VisualStudio.Component.Windows10SDK", `
           "--add", "Microsoft.Component.VC.Runtime.UCRTSDK", `
           "--add", "Microsoft.VisualStudio.Component.VC.ATL", `
           "--add", "Microsoft.VisualStudio.Component.VC.ATLMFC"
+      - name: 诊断 VS 安装状态
+        run: |
+          C:\ProgramData\Chocolatey\bin\vswhere.exe -all -products *
+          Get-ChildItem 'C:\Program Files\Microsoft Visual Studio\' | Select-Object Name
+          Get-ChildItem $env:TEMP\dd_setup_*.log -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1 | ForEach-Object { Get-Content $_.FullName -Tail 20 }
       - name: 设置 msbuild
         uses: microsoft/setup-msbuild@v2
         with:
